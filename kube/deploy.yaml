@@ -50,7 +50,7 @@ spec:
         - name: SQL_USER
           value: sqladmin
         - name: SQL_PASSWORD
-          value: TODO
+          value: AAABBB123@
         - name: SQL_SERVER
           value: sqlserverznl4647.database.windows.net
         - name: SQL_DBNAME
