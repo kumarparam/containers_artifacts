@@ -74,6 +74,8 @@ spec:
           value: 10.244.1.27.team5.pod.cluster.local
         - name: TRIPS_API_ENDPOINT
           value: 10.244.2.26.team5.pod.cluster.local
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
         ports:
         - containerPort: 80
         resources:
