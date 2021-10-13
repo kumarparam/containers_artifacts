@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: tripviewer
-        image: tripinsights/tripviewer:1.0
+        image: registryznl4647.azurecr.io/tripinsights/tripviewer:1.0
         ports:
         - containerPort: 80
         resources:
