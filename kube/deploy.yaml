@@ -73,7 +73,7 @@ spec:
         - name: USERPROFILE_API_ENDPOINT
           value: 10.244.1.27.team5.pod.cluster.local
         - name: TRIPS_API_ENDPOINT
-          value: 10.244.2.26.team5.pod.cluster.local
+          value: http://20.205.103.58/
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
         ports:
@@ -143,3 +143,16 @@ spec:
   - port: 80
   selector:
     app: tripviewer
+---
+# services: lb for trips
+apiVersion: v1
+kind: Service
+metadata:
+  name: trips
+  namespace: team5
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: trips
