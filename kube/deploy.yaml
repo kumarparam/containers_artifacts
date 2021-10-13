@@ -1,0 +1,137 @@
+# poi
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poi-deployment
+  labels:
+    app: poi
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: poi
+  template:
+    metadata:
+      labels:
+        app: poi
+    spec:
+      containers:
+      - name: poi
+        image: registryznl4647.azurecr.io/kp/tripinsights/poi:1.0
+        ports:
+        - containerPort: 80
+---
+# trips
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trips
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: trips
+  template:
+    metadata:
+      labels:
+        app: trips
+    spec:
+      containers:
+      - name: trips
+        image: registryznl4647.azurecr.io/tripinsights/trips:1.0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+---
+# tripviewer
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tripviewer-deployment
+  labels:
+    app: tripviewer
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: tripviewer
+  template:
+    metadata:
+      labels:
+        app: tripviewer
+    spec:
+      containers:
+      - name: tripviewer
+        image: registryznl4647.azurecr.io/tripinsights/tripviewer:1.0
+        env:
+        - name: USERPROFILE_API_ENDPOINT
+          value: userprofile
+        - name: TRIPS_API_ENDPOINT
+          value: trips
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "500m"
+---
+# userprofile
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userprofile-deployment
+  labels:
+    app: userprofile
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: userprofile
+  template:
+    metadata:
+      labels:
+        app: userprofile
+    spec:
+      containers:
+      - name: userprofile
+        image: registryznl4647.azurecr.io/tripinsights/userprofile:1.0
+        ports:
+        - containerPort: 80
+---
+# user-java
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poi-deployment
+  labels:
+    app: poi
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: poi
+  template:
+    metadata:
+      labels:
+        app: poi
+    spec:
+      containers:
+      - name: poi
+        image: registryznl4647.azurecr.io/kp/tripinsights/poi:1.0
+        ports:
+        - containerPort: 80
+---
+# services: lb for tripviewer
+apiVersion: v1
+kind: Service
+metadata:
+  name: tripviewer
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: tripviewer
