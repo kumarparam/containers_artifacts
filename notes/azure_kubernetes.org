@@ -1,0 +1,80 @@
+:PROPERTIES:
+:ID:       3d838a69-e320-4923-9b3b-38ae9baa366a
+:END:
+#+titLe: Azure Kubernetes
+#+date: <2021-10-10 Sun 17:37>
+
+* Pre-work
+[[https://www.youtube.com/watch?v=fqMOX6JJhGo][Docker Tutorial for Beginners - A Full DevOps Course on How to Run Applicatio...]]
+[[https://www.youtube.com/watch?v=WVY4x20pw1A][This is why you need Kubernetes - YouTube]]
+
+[[https://docs.microsoft.com/en-us/learn/paths/intro-to-kubernetes-on-azure/][Introduction to Kubernetes on Azure - Learn | Microsoft Docs]]
+
+Do these modules:
+- Introduction to Kubernetes
+- Introduction to Azure Kubernetes Service
+- Deploy a containerized application on Azure Kubernetes Service
+
+[[https://www.freecodecamp.org/news/what-is-a-helm-chart-tutorial-for-kubernetes-beginners/][What is a Helm Chart? A Tutorial for Kubernetes Beginners]]
+
+* Openhack
+
+ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no  azureuser@52.175.71.141  
+$%opEN46hACK;
+
+
+#+begin_src 
+docker-compose build
+docker image -a
+docker images -a
+docker images
+docker ps
+docker containers
+docker container
+ls
+vim docker-compose.yaml
+docker images -a
+az login
+az acr login --name registryznl4647
+docker login registryznl4647.azurecr.io
+docker login registryznl4647.azurecr.io
+docker login registryznl4647.azurecr.io
+docker images
+docker push egistryznl4647.azurecr.io/tripinsights/user-java
+docker push egistryznl4647.azurecr.io tripinsights/user-java
+docker push egistryznl4647.azurecr.io/tripinsights/poi
+docker push tripinsights/poi
+docker tag tripinsights/user-java egistryznl4647.azurecr.io/tripinsights/user-java
+docker tag tripinsights/user-java:1.0 egistryznl4647.azurecr.io/tripinsights/user-java:1.0
+docker push egistryznl4647.azurecr.io/tripinsights/user-java:1.0
+docker tag tripinsights/user-java:1.0 registryznl4647.azurecr.io/tripinsights/user-java:1.0
+docker push registryznl4647.azurecr.io/tripinsights/user-java:1.0
+docker tag tripinsights/tripviewer:1.0 registryznl4647.azurecr.io/tripinsights/tripviewer:1.0
+docker push registryznl4647.azurecr.io/tripinsights/tripviewer:1.0
+docker images
+docker tag tripinsights/poi:1.0 registryznl4647.azurecr.io/tripinsights/poi:1.0
+docker push registryznl4647.azurecr.io/tripinsights/poi:1.0
+docker tag tripinsights/userprofile:1.0 registryznl4647.azurecr.io/tripinsights/userprofile:1.0
+docker push registryznl4647.azurecr.io/tripinsights/userprofile:1.0
+docker tag tripinsights/trips:1.0 registryznl4647.azurecr.io/tripinsights/trips:1.0
+docker push registryznl4647.azurecr.io/tripinsights/trips:1.0
+history
+#+end_src
+
+
+https://azure.microsoft.com/mediahandler/files/resourcefiles/phippy-goes-to-the-zoo/Phippy%20Goes%20To%20The%20Zoo_MSFTonline.pdf
+https://github.com/kelseyhightower/kubernetes-the-hard-way
+
+
+
+* Arch setup
+#+begin_src 
+yay -S azure-cli
+yay -S helm
+podman pull mcr.microsoft.com/mssql/server:2017-latest
+
+#+end_src
+
+Install snapd to install the Mikrok8s snap
+[[https://snapcraft.io/install/microk8s/arch][Install microk8s on Arch Linux using the Snap Store | Snapcraft]]
+
