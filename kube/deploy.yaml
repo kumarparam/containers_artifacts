@@ -69,6 +69,19 @@ spec:
         - containerPort: 80
           name: http
 ---
+# services: lb for trips
+apiVersion: v1
+kind: Service
+metadata:
+  name: trips
+  namespace: team5
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: trips
+---
 # tripviewer
 apiVersion: apps/v1
 kind: Deployment
@@ -96,8 +109,8 @@ spec:
         - name: USERPROFILE_API_ENDPOINT
           value: 10.244.1.27.team5.pod.cluster.local
         - name: TRIPS_API_ENDPOINT
-          value: http://20.205.103.58/
-        ports:
+          value: http://trips.team5.svc.cluster.local
+         ports:
         - containerPort: 80
           name: http
         resources:
@@ -169,16 +182,3 @@ spec:
   - port: 80
   selector:
     app: tripviewer
----
-# services: lb for trips
-apiVersion: v1
-kind: Service
-metadata:
-  name: trips
-  namespace: team5
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-  selector:
-    app: trips
