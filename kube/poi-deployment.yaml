@@ -17,5 +17,10 @@ spec:
       containers:
       - name: poi
         image: registryznl4647.azurecr.io/kp/tripinsights/poi:1.0
+        env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: "Production"
+          - name: WEB_PORT
+            value: "80"
         ports:
         - containerPort: 80
