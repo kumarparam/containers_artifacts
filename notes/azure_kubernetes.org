@@ -61,6 +61,17 @@ docker push registryznl4647.azurecr.io/tripinsights/trips:1.0
 history
 #+end_src
 
+#+begin_src 
+❯ az aks get-credentials --resource-group teamResources --name team5AKSCluster
+Merged "team5AKSCluster" as current context in /home/thys/.kube/config
+❯ kubectl get nodes
+NAME                                STATUS   ROLES   AGE   VERSION
+aks-nodepool1-36380912-vmss000000   Ready    agent   49m   v1.20.9
+aks-nodepool1-36380912-vmss000001   Ready    agent   49m   v1.20.9
+aks-nodepool1-36380912-vmss000002   Ready    agent   49m   v1.20.9
+#+end_src
+
+
 
 https://azure.microsoft.com/mediahandler/files/resourcefiles/phippy-goes-to-the-zoo/Phippy%20Goes%20To%20The%20Zoo_MSFTonline.pdf
 https://github.com/kelseyhightower/kubernetes-the-hard-way
