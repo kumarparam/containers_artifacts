@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>README.html</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+</head>
+
+<body>
+
+<h1 id="tripviewer">TripViewer</h1>
+<p>This is the TripViewer website for the Trip Insights service.</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>The TripViewer website relies on the Trip Insights APIs to be reachable in order to display correct information.</p>
+<h2 id="paths">Paths</h2>
+<p>The following paths are available on the site:</p>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 19%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GET</td>
+<td>/</td>
+<td>Home page of the Trip Viewer site</td>
+</tr>
+<tr class="even">
+<td>GET</td>
+<td>/Trip</td>
+<td>Displays a map and trip information. This path is dependent on the <code>trips</code> API to function correctly</td>
+</tr>
+<tr class="odd">
+<td>GET</td>
+<td>/UserProfile</td>
+<td>Displays the user’s profile. This path depends on the <code>userprofile</code> API to function correctly</td>
+</tr>
+</tbody>
+</table>
+<p>The api has been instrumented using the <a href="https://github.com/prometheus-net/prometheus-net#prometheus-net">.Net Promethues library</a>. For more information on metrics and configuration see <a href="https://github.com/prometheus-net/prometheus-net#aspnet-core-http-request-metrics">ASP.NET Core HTTP request metrics</a></p>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 39%" />
+<col style="width: 49%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GET</td>
+<td>/metrics</td>
+<td>includes number of HTTP requests in progress, total number of received http requets, duration of requests</td>
+</tr>
+</tbody>
+</table>
+<h2 id="configuration">Configuration</h2>
+<p>The TripViewer site is configured via the variables in the table below.</p>
+<p>The value for a configuration variable should be specified via an environment variable.</p>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 26%" />
+<col style="width: 20%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Required</th>
+<th>Format</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>USERPROFILE_API_ENDPOINT</td>
+<td>Yes</td>
+<td>“http://endpoint.you.specify(:port)”</td>
+<td>The FQDN of the <code>userprofile</code> API endpoint.</td>
+</tr>
+<tr class="even">
+<td>TRIPS_API_ENDPOINT</td>
+<td>Yes</td>
+<td>“http://endpoint.you.specify(:port)”</td>
+<td>The FQDN of the <code>trips</code> API endpoint.</td>
+</tr>
+<tr class="odd">
+<td>BING_MAPS_KEY</td>
+<td>No</td>
+<td>&lt;guid&gt;</td>
+<td>A Bing Maps API key</td>
+</tr>
+</tbody>
+</table>
+<h2 id="run-in-docker">Run in Docker</h2>
+<p>Simple build:</p>
+<pre><code>docker build -f Dockerfile -t &quot;tripinsights/tripviewer:1.0&quot; .</code></pre>
+<p>To build the image for release:</p>
+<p>Bash</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">--no-cache</span> <span class="at">--build-arg</span> IMAGE_VERSION=<span class="st">&quot;1.0&quot;</span> <span class="at">--build-arg</span> IMAGE_CREATE_DATE=<span class="st">&quot;</span><span class="kw">`</span><span class="fu">date</span> <span class="at">-u</span> +<span class="st">&quot;%Y-%m-%dT%H:%M:%SZ&quot;</span><span class="kw">`</span><span class="st">&quot;</span> <span class="at">--build-arg</span> IMAGE_SOURCE_REVISION=<span class="st">&quot;</span><span class="kw">`</span><span class="fu">git</span> rev-parse HEAD<span class="kw">`</span><span class="st">&quot;</span> <span class="at">-f</span> Dockerfile <span class="at">-t</span> <span class="st">&quot;tripinsights/tripviewer:1.0&quot;</span> .</span></code></pre></div>
+<p>Powershell</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">--</span>no<span class="op">-</span>cache <span class="op">--</span>build<span class="op">-</span>arg IMAGE_VERSION<span class="op">=</span><span class="st">&quot;1.0&quot;</span> <span class="op">--</span>build<span class="op">-</span>arg IMAGE_CREATE_DATE<span class="op">=</span><span class="st">&quot;$(Get-Date((Get-Date).ToUniversalTime()) -UFormat &#39;%Y-%m-%dT%H:%M:%SZ&#39;)&quot;</span> <span class="op">--</span>build<span class="op">-</span>arg IMAGE_SOURCE_REVISION<span class="op">=</span><span class="st">&quot;$(git rev-parse HEAD)&quot;</span> <span class="op">-</span>f Dockerfile <span class="op">-</span>t <span class="st">&quot;tripinsights/tripviewer:1.0&quot;</span> <span class="op">.</span></span></code></pre></div>
+<p>To run the image</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">-p</span> 8080:80 <span class="at">--name</span> tripviewer <span class="at">-e</span> <span class="st">&quot;USERPROFILE_API_ENDPOINT=http://</span><span class="va">$ENDPOINT</span><span class="st">&quot;</span> <span class="at">-e</span> <span class="st">&quot;TRIPS_API_ENDPOINT=http://</span><span class="va">$ENDPOINT</span><span class="st">&quot;</span> tripinsights/tripviewer:1.0</span></code></pre></div>
+<h2 id="testing">Testing</h2>
+<p>Open “http://localhost:8080/” in the browser. While running the docker container, header and documentation links will be broken as they rely on the Trip Insights APIs to be running and reachable.</p>
+
+</body>
+</html>
