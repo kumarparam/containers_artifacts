@@ -17,28 +17,13 @@ Do these modules:
 
 [[https://www.freecodecamp.org/news/what-is-a-helm-chart-tutorial-for-kubernetes-beginners/][What is a Helm Chart? A Tutorial for Kubernetes Beginners]]
 
-* Arch setup
-#+begin_src 
-yay -S azure-cli
-yay -S helm
-podman pull mcr.microsoft.com/mssql/server:2017-latest
-
-#+end_src
-
-Install snapd to install the Mikrok8s snap
-[[https://snapcraft.io/install/microk8s/arch][Install microk8s on Arch Linux using the Snap Store | Snapcraft]]
-
 * Openhack
 
 ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no  azureuser@52.175.71.141  
 $%opEN46hACK;
 
 
-https://azure.microsoft.com/mediahandler/files/resourcefiles/phippy-goes-to-the-zoo/Phippy%20Goes%20To%20The%20Zoo_MSFTonline.pdf
-
-https://github.com/kelseyhightower/kubernetes-the-hard-way
-
-
+#+begin_src 
 docker-compose build
 docker image -a
 docker images -a
@@ -74,3 +59,22 @@ docker push registryznl4647.azurecr.io/tripinsights/userprofile:1.0
 docker tag tripinsights/trips:1.0 registryznl4647.azurecr.io/tripinsights/trips:1.0
 docker push registryznl4647.azurecr.io/tripinsights/trips:1.0
 history
+#+end_src
+
+
+https://azure.microsoft.com/mediahandler/files/resourcefiles/phippy-goes-to-the-zoo/Phippy%20Goes%20To%20The%20Zoo_MSFTonline.pdf
+https://github.com/kelseyhightower/kubernetes-the-hard-way
+
+
+
+* Arch setup
+#+begin_src 
+yay -S azure-cli
+yay -S helm
+podman pull mcr.microsoft.com/mssql/server:2017-latest
+
+#+end_src
+
+Install snapd to install the Mikrok8s snap
+[[https://snapcraft.io/install/microk8s/arch][Install microk8s on Arch Linux using the Snap Store | Snapcraft]]
+
