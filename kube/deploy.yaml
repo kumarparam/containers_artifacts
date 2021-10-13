@@ -47,8 +47,6 @@ spec:
       - name: trips
         image: registryznl4647.azurecr.io/tripinsights/trips:1.0
         env:
-        - name: ASPNETCORE_ENVIRONMENT
-          value: "Production"         
         - name: SQL_USER
           value: sqladmin
         - name: SQL_PASSWORD
@@ -67,7 +65,6 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 80
-          name: http
 ---
 # services: lb for trips
 apiVersion: v1
@@ -104,15 +101,14 @@ spec:
       - name: tripviewer
         image: registryznl4647.azurecr.io/tripinsights/tripviewer:1.0
         env:
-        - name: ASPNETCORE_ENVIRONMENT
-          value: "Production"         
         - name: USERPROFILE_API_ENDPOINT
           value: 10.244.1.27.team5.pod.cluster.local
         - name: TRIPS_API_ENDPOINT
           value: http://trips.team5.svc.cluster.local
-         ports:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        ports:
         - containerPort: 80
-          name: http
         resources:
           limits:
             memory: 512Mi
@@ -139,12 +135,8 @@ spec:
       containers:
       - name: userprofile
         image: registryznl4647.azurecr.io/tripinsights/userprofile:1.0
-        env:
-        - name: ASPNETCORE_ENVIRONMENT
-          value: "Production"  
         ports:
         - containerPort: 80
-          name: http
 ---
 # user-java
 apiVersion: apps/v1
