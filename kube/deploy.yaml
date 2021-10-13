@@ -71,9 +71,9 @@ spec:
         image: registryznl4647.azurecr.io/tripinsights/tripviewer:1.0
         env:
         - name: USERPROFILE_API_ENDPOINT
-          value: userprofile
+          value: 10.244.1.27.team5.pod.cluster.local
         - name: TRIPS_API_ENDPOINT
-          value: trips
+          value: 10.244.2.26.team5.pod.cluster.local
         ports:
         - containerPort: 80
         resources:
