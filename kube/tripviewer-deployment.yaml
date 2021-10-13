@@ -16,6 +16,16 @@ spec:
     spec:
       containers:
       - name: tripviewer
+<<<<<<< HEAD
         image: registryznl4647.azurecr.io/kp/tripinsights/tripviewer:1.0
         ports:
         - containerPort: 80
+=======
+        image: registryznl4647.azurecr.io/tripinsights/tripviewer:1.0
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+>>>>>>> e9a0074949d0fbca2e4e45c5fcf4685caa5dd980
