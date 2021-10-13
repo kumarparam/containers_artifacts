@@ -53,7 +53,7 @@ spec:
         - name: OPENAPI_DOCS_URI
           value: http://localhost:8080
         - name: DEBUG_LOGGING
-          value: true
+          value: "true"
         resources:
           limits:
             memory: "128Mi"
