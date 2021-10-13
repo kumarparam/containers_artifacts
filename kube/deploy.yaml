@@ -41,6 +41,19 @@ spec:
       containers:
       - name: trips
         image: registryznl4647.azurecr.io/tripinsights/trips:1.0
+        env:
+        - name: SQL_USER
+          value: sqladmin
+        - name: SQL_PASSWORD
+          value: TODO
+        - name: SQL_SERVER
+          value: sqlserverznl4647.database.windows.net
+        - name: SQL_DBNAME
+          value: mydrivingDB
+        - name: OPENAPI_DOCS_URI
+          value: http://localhost:8080
+        - name: DEBUG_LOGGING
+          value: true
         resources:
           limits:
             memory: "128Mi"
