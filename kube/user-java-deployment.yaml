@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: poi-deployment
+  name: user-java-deployment
   labels:
-    app: poi
+    app: user-java
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: poi
+      app: user-java
   template:
     metadata:
       labels:
-        app: poi
+        app: user-java
     spec:
       containers:
-      - name: poi
-        image: registryznl4647.azurecr.io/kp/tripinsights/poi:1.0
+      - name: user-java
+        image: registryznl4647.azurecr.io/kp/tripinsights/user-java:1.0
         ports:
         - containerPort: 80
