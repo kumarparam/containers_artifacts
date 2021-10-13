@@ -48,7 +48,7 @@ spec:
         image: registryznl4647.azurecr.io/tripinsights/trips:1.0
         env:
         - name: SQL_USER
-          value: sqladmin
+          value: sqladminzNl4647
         - name: SQL_PASSWORD
           value: AAABBB123@
         - name: SQL_SERVER
