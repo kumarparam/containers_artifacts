@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: poi
-        image: tripinsights/poi
+        image: registryznl4647.azurecr.io/kp/tripinsights/poi:1.0
         ports:
         - containerPort: 80
