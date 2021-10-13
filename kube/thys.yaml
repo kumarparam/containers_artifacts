@@ -1,0 +1,221 @@
+---
+# poi
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poi
+  namespace: thys
+  labels:
+    app: poi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: poi
+  template:
+    metadata:
+      labels:
+        app: poi
+    spec:
+      containers:
+      - name: poi
+        image: registryznl4647.azurecr.io/kp/tripinsights/poi:1.0
+        ports:
+        - containerPort: 80
+
+---
+# trips
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trips
+  namespace: thys
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trips
+  template:
+    metadata:
+      labels:
+        app: trips
+    spec:
+      containers:
+      - name: trips
+        image: registryznl4647.azurecr.io/tripinsights/trips:1.0
+        env:
+        - name: SQL_USER
+          value: sqladmin
+        - name: SQL_PASSWORD
+          value: SU
+        - name: SQL_SERVER
+          value: sqlserverznl4647.database.windows.net
+        - name: SQL_DBNAME
+          value: mydrivingDB
+        - name: OPENAPI_DOCS_URI
+          value: http://trips:8080
+        - name: DEBUG_LOGGING
+          value: "true"
+        ports:
+        - containerPort: 80
+---
+# internal trips
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: thys
+  name: trips
+  labels:
+    service: trips
+spec:
+  selector:
+    app: trips
+  ports:
+  - name: service
+    port: 80
+    protocol: TCP
+  - name: docs
+    port: 8080
+    protocol: TCP
+
+---
+# external trips
+apiVersion: v1
+kind: Service
+metadata:
+  name: trips
+  namespace: thys
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: trips
+
+
+---
+# tripviewer
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tripviewer
+  namespace: thys
+  labels:
+    app: tripviewer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tripviewer
+  template:
+    metadata:
+      labels:
+        app: tripviewer
+    spec:
+      containers:
+      - name: tripviewer
+        image: registryznl4647.azurecr.io/tripinsights/tripviewer:1.0
+        env:
+        - name: USERPROFILE_API_ENDPOINT
+          value: http://userprofile
+        - name: TRIPS_API_ENDPOINT
+          value: http://trips
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        ports:
+        - containerPort: 80
+---
+# userprofile
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userprofile
+  namespace: thys
+  labels:
+    app: userprofile
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userprofile
+  template:
+    metadata:
+      labels:
+        app: userprofile
+    spec:
+      containers:
+      - name: userprofile
+        image: registryznl4647.azurecr.io/tripinsights/userprofile:1.0
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: thys
+  name: userprofile
+  labels:
+    run: userprofile
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: userprofile
+
+
+---
+# user-java
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-java
+  namespace: thys
+  labels:
+    app: user-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-java
+  template:
+    metadata:
+      labels:
+        app: user-java
+    spec:
+      containers:
+      - name: user-java
+        image: registryznl4647.azurecr.io/tripinsights/user-java:1.0
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: thys
+  name: user-java
+  labels:
+    service: user-java
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: user-java
+
+
+---
+# services: lb for tripviewer
+apiVersion: v1
+kind: Service
+metadata:
+  name: tripviewer
+  namespace: thys
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: tripviewer
