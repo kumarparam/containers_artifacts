@@ -11,5 +11,6 @@ az aks create \
     --generate-ssh-keys \
     --enable-private-cluster \
     --enable-aad \
-    --aad-admin-group-object-ids <changeme-admin-group-object-id>
+    --enable-addons azure-keyvault-secrets-provider --enable-managed-identity \
+    --aad-admin-group-object-ids <changeme-admin-group-object-id> \
     --attach-acr /subscriptions/03271573-4285-43f4-8557-808369b280af/resourceGroups/teamResources/providers/Microsoft.ContainerRegistry/registries/registryznl4647
