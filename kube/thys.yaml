@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: poi
-        image: registryznl4647.azurecr.io/kp/tripinsights/poi:1.0
+        image: registryznl4647.azurecr.io/tripinsights/poi:1.0
         env:
         - name: SQL_USER
           value: sqladminzNl4647
