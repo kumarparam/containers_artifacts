@@ -24,7 +24,10 @@ spec:
         - name: SQL_USER
           value: sqladminzNl4647
         - name: SQL_PASSWORD
-          value: AAABBB123@
+          valueFrom: 
+            secretKeyRef:
+              name: sql-password
+              key: password
         - name: SQL_SERVER
           value: sqlserverznl4647.database.windows.net
         - name: SQL_DBNAME
@@ -56,7 +59,10 @@ spec:
         - name: SQL_USER
           value: sqladminzNl4647
         - name: SQL_PASSWORD
-          value: AAABBB123@
+          valueFrom: 
+            secretKeyRef:
+              name: sql-password
+              key: password
         - name: SQL_SERVER
           value: sqlserverznl4647.database.windows.net
         - name: SQL_DBNAME
@@ -159,7 +165,10 @@ spec:
         - name: SQL_USER
           value: sqladminzNl4647
         - name: SQL_PASSWORD
-          value: AAABBB123@
+          valueFrom: 
+            secretKeyRef:
+              name: sql-password
+              key: password
         - name: SQL_SERVER
           value: sqlserverznl4647.database.windows.net
         - name: SQL_DBNAME
