@@ -1,10 +1,27 @@
+# web namespace
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    name: web
+
+---
+# api namespace
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  labels:
+    name: api
+
 ---
 # poi
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: poi
-  namespace: team5
+  namespace: api
   labels:
     app: poi
 spec:
@@ -41,7 +58,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: trips
-  namespace: team5
+  namespace: api
 spec:
   replicas: 1
   selector:
@@ -78,7 +95,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: team5
+  namespace: api
   name: trips
   labels:
     service: trips
@@ -99,7 +116,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: trips
-  namespace: team5
+  namespace: api
 spec:
   type: LoadBalancer
   ports:
@@ -114,7 +131,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tripviewer
-  namespace: team5
+  namespace: web
   labels:
     app: tripviewer
 spec:
@@ -145,7 +162,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: userprofile
-  namespace: team5
+  namespace: api
   labels:
     app: userprofile
 spec:
@@ -180,7 +197,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: team5
+  namespace: api
   name: userprofile
   labels:
     run: userprofile
@@ -198,7 +215,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: user-java
-  namespace: team5
+  namespace: api
   labels:
     app: user-java
 spec:
@@ -221,7 +238,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: team5
+  namespace: api
   name: user-java
   labels:
     service: user-java
@@ -239,7 +256,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tripviewer
-  namespace: team5
+  namespace: web
 spec:
   type: LoadBalancer
   ports:
@@ -253,7 +270,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: poi
-  namespace: team5
+  namespace: api
 spec:
   type: LoadBalancer
   ports:
