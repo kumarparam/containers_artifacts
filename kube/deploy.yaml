@@ -1,6 +1,6 @@
 # web namespace
 apiVersion: apps/v1
-kind: namespace
+kind: Namespace
 metadata:
   name: web
   labels:
@@ -9,7 +9,7 @@ metadata:
 ---
 # api namespace
 apiVersion: apps/v1
-kind: namespace
+kind: Namespace
 metadata:
   name: api
   labels:
