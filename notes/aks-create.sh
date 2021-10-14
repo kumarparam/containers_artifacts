@@ -10,4 +10,5 @@ az aks create \
     --service-cidr 10.3.0.0/24 \
     --generate-ssh-keys \
     --enable-private-cluster \
+    --enable-aad
     --attach-acr /subscriptions/03271573-4285-43f4-8557-808369b280af/resourceGroups/teamResources/providers/Microsoft.ContainerRegistry/registries/registryznl4647
