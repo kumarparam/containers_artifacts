@@ -1,3 +1,4 @@
+---
 # poi
 apiVersion: apps/v1
 kind: Deployment
@@ -7,7 +8,7 @@ metadata:
   labels:
     app: poi
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: poi
@@ -20,12 +21,17 @@ spec:
       - name: poi
         image: registryznl4647.azurecr.io/kp/tripinsights/poi:1.0
         env:
-          - name: ASPNETCORE_ENVIRONMENT
-            value: "Production"
-          - name: WEB_PORT
-            value: "80"
+        - name: SQL_USER
+          value: sqladminzNl4647
+        - name: SQL_PASSWORD
+          value: AAABBB123@
+        - name: SQL_SERVER
+          value: sqlserverznl4647.database.windows.net
+        - name: SQL_DBNAME
+          value: mydrivingDB
         ports:
         - containerPort: 80
+
 ---
 # trips
 apiVersion: apps/v1
@@ -34,7 +40,7 @@ metadata:
   name: trips
   namespace: team5
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: trips
@@ -48,7 +54,7 @@ spec:
         image: registryznl4647.azurecr.io/tripinsights/trips:1.0
         env:
         - name: SQL_USER
-          value: sqladmin
+          value: sqladminzNl4647
         - name: SQL_PASSWORD
           value: AAABBB123@
         - name: SQL_SERVER
@@ -56,17 +62,33 @@ spec:
         - name: SQL_DBNAME
           value: mydrivingDB
         - name: OPENAPI_DOCS_URI
-          value: http://localhost:8080
+          value: http://trips:8080
         - name: DEBUG_LOGGING
           value: "true"
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         ports:
         - containerPort: 80
 ---
-# services: lb for trips
+# internal trips
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: team5
+  name: trips
+  labels:
+    service: trips
+spec:
+  selector:
+    app: trips
+  ports:
+  - name: service
+    port: 80
+    protocol: TCP
+  - name: docs
+    port: 8080
+    protocol: TCP
+
+---
+# external trips
 apiVersion: v1
 kind: Service
 metadata:
@@ -78,6 +100,8 @@ spec:
   - port: 80
   selector:
     app: trips
+
+
 ---
 # tripviewer
 apiVersion: apps/v1
@@ -88,7 +112,7 @@ metadata:
   labels:
     app: tripviewer
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: tripviewer
@@ -102,17 +126,13 @@ spec:
         image: registryznl4647.azurecr.io/tripinsights/tripviewer:1.0
         env:
         - name: USERPROFILE_API_ENDPOINT
-          value: 10.244.1.27.team5.pod.cluster.local
+          value: http://userprofile
         - name: TRIPS_API_ENDPOINT
-          value: http://trips.team5.svc.cluster.local
+          value: http://trips
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
         ports:
         - containerPort: 80
-        resources:
-          limits:
-            memory: 512Mi
-            cpu: "500m"
 ---
 # userprofile
 apiVersion: apps/v1
@@ -123,7 +143,7 @@ metadata:
   labels:
     app: userprofile
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: userprofile
@@ -135,8 +155,34 @@ spec:
       containers:
       - name: userprofile
         image: registryznl4647.azurecr.io/tripinsights/userprofile:1.0
+        env:
+        - name: SQL_USER
+          value: sqladminzNl4647
+        - name: SQL_PASSWORD
+          value: AAABBB123@
+        - name: SQL_SERVER
+          value: sqlserverznl4647.database.windows.net
+        - name: SQL_DBNAME
+          value: mydrivingDB
         ports:
         - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: team5
+  name: userprofile
+  labels:
+    run: userprofile
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: userprofile
+
+
 ---
 # user-java
 apiVersion: apps/v1
@@ -147,7 +193,7 @@ metadata:
   labels:
     app: user-java
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: user-java
@@ -158,9 +204,26 @@ spec:
     spec:
       containers:
       - name: user-java
-        image: registryznl4647.azurecr.io/kp/tripinsights/user-java:1.0
+        image: registryznl4647.azurecr.io/tripinsights/user-java:1.0
         ports:
         - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: team5
+  name: user-java
+  labels:
+    service: user-java
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: user-java
+
+
 ---
 # services: lb for tripviewer
 apiVersion: v1
